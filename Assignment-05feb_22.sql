@@ -17,7 +17,7 @@ SELECT empno,ename,sal,deptno,job FROM emp ORDER BY deptno, job desc;
 --Display all the unique job groups in the descending order?
 SELECT DISTINCT job FROM emp ORDER BY job desc ;
 
--- Display all the details of all ‘Mgrs’
+-- Display all the details of all â€˜Mgrsâ€™
 Select * from emp where empno in ( select mgr from emp) ;
 
 -- List the emps who joined before 1981
@@ -38,7 +38,7 @@ select * from emp where comm > sal;
 -- List the emps along with their Exp and Daily Sal is more than Rs 100
 select empno, ename, sal, sal/30 daily, months_between(sysdate,hiredate) exp from emp where (sal/30) > 100;
 
--- List the emps who are either ‘CLERK’ or ‘ANALYST’ in the Desc order
+-- List the emps who are either â€˜CLERKâ€™ or â€˜ANALYSTâ€™ in the Desc order
 SELECT * FROM emp WHERE job='CLERK' OR job='ANALYST' ORDER BY job DESC;
 
 -- List the emps who joined on 1-MAY-81,3-DEC-81,17-DEC-81,19-JAN-80 in asc order of seniority
@@ -56,31 +56,31 @@ select * from emp where 12*sal between 22000 and 45000;
 -- List the Enames those are having five characters in their Names
  select ename from emp where length (ename) = 5;
  
---  List the Enames those are starting with ‘S’ and with five characters
+--  List the Enames those are starting with â€˜Sâ€™ and with five characters
 select ename from emp where ename like 'S%' and length (ename) = 5; 
 
--- List the emps those are having four chars and third character must be ‘r’
+-- List the emps those are having four chars and third character must be â€˜râ€™
 select empno,ename,deptno from emp where length(ename) = 4 and ename like '__R%';
 
--- List the Five character names starting with ‘S’ and ending with ‘H’
+-- List the Five character names starting with â€˜Sâ€™ and ending with â€˜Hâ€™
  select empno,ename,deptno from emp where length(ename) = 5 and ename like 'S%H'; 
  
 --  List the emps who joined in January
 select empno,ename,deptno,hiredate from emp where to_char (hiredate,'mon') = 'jan'; 
 
--- List the emps whose names having a character set ‘ll’ together
+-- List the emps whose names having a character set â€˜llâ€™ together
 select empno,ename,deptno,hiredate from emp where ename like '%LL%'; 
 
 --List the emps who does not belong to Deptno 20
 select empno,ename,deptno,hiredate from emp where deptno!= 20;
 
--- List all the emps except ‘PRESIDENT’ & ‘MGR” in asc order of Salaries
+-- List all the emps except â€˜PRESIDENTâ€™ & â€˜MGRâ€ in asc order of Salaries
 select empno,ename,deptno,hiredate,job,sal from emp where job not like 'PRESIDENT' and job not like 'MANAGER' order by sal asc; 
 
 -- List the emps whose Empno not starting with digit78
 select empno,ename,deptno,hiredate,job,sal from emp where empno not like '78%';
 
--- List the emps who are working under ‘MGR’
+-- List the emps who are working under â€˜MGRâ€™
 select e.ename || ' works for ' || m.ename from emp e ,emp m where e.mgr = m.empno ;
 
 -- List the emps who joined in any year but not belongs to the month of March
