@@ -178,6 +178,275 @@ select * from customer;
 
 commit;
 
+--The following example uses the % wildcard to find the phones of contacts whose last names start with 'St':
+SELECT
+    first_name,
+    last_name,
+    phone
+FROM
+    contacts
+WHERE
+    last_name LIKE 'St%'
+ORDER BY
+    last_name;
+--To find the phone numbers of contacts whose last names end with the string 'er', you use the following statement:    
+SELECT
+    first_name,
+    last_name,
+    phone
+FROM
+    contacts
+WHERE
+    last_name LIKE '%er'
+ORDER BY
+    last_name;
+--For example, the following statement finds emails of contacts whose first names start with CH:  
+SELECT
+    first_name,
+    last_name,
+    email
+FROM
+    contacts
+WHERE
+    UPPER(first_name) LIKE 'CH%'
+ORDER BY
+    first_name;
+-- The following example uses the NOT LIKE operator to find contacts whose phone numbers do not start with '+1':   
+SELECT
+  first_name, last_name, phone
+FROM
+  contacts
+WHERE
+  phone NOT LIKE '+1%'
+ORDER BY
+  first_name;
+--The following example finds the phone numbers and emails of contacts whose first names have the following pattern 'Je_i':
+SELECT
+    first_name,
+    last_name,
+    email,
+    phone
+FROM
+    contacts
+WHERE
+    first_name LIKE 'Je_i'
+ORDER BY 
+    first_name;
+    
+--it will match any last name that starts with Je and has at least 3 characters:
+
+SELECT
+    first_name,
+    last_name,
+    email,
+    phone
+FROM
+    contacts
+WHERE
+    first_name LIKE 'Je_%';
+    
+--The following statements create discounts table and insert some sample data for testing:
+
+CREATE TABLE discounts
+  (
+    product_id NUMBER, 
+    discount_message VARCHAR2( 255 ) NOT NULL,
+    PRIMARY KEY( product_id )
+  );
+
+
+INSERT INTO discounts(product_id, discount_message)
+VALUES(1,
+       'Buy 1 and Get 25% OFF on 2nd ');
+
+INSERT INTO discounts(product_id, discount_message)
+VALUES(2,
+       'Buy 2 and Get 50% OFF on 3rd ');
+
+
+INSERT INTO discounts(product_id, discount_message)
+VALUES(3,
+       'Buy 3 Get 1 free');
+       
+--The following statement retrieves products which have discount 25%:
+
+SELECT
+	product_id,
+	discount_message
+FROM
+	discounts
+WHERE
+	discount_message LIKE '%25!%%' ESCAPE '!';
+    
+--The following SELECT statement attempts to return all sales orders which do not have a responsible salesman:
+
+SELECT * FROM orders 
+WHERE salesman_id = NULL
+ORDER BY order_date DESC;
+
+--The following query returns all sales orders that do not have a responsible salesman:
+
+SELECT * FROM orders 
+WHERE salesman_id IS NULL
+ORDER BY order_date DESC;
+
+--the following example returns all sales orders which have a responsible salesman:
+
+SELECT * FROM orders
+WHERE salesman_id IS NOT NULL
+ORDER BY order_date DESC;
+
+--The following statement finds all orders which are in charge of the salesman id 54, 55, and 56:
+
+SELECT
+    order_id,
+    customer_id,
+    status,
+    salesman_id
+FROM
+    orders
+WHERE
+    salesman_id IN (
+        54,
+        55,
+        56
+    )
+ORDER BY
+    order_id;
+    
+--the following example retrieves sales orders whose statuses are Pending or Canceled:
+
+SELECT
+    order_id,
+    customer_id,
+    status,
+    salesman_id
+FROM
+    orders
+WHERE
+    status IN(
+        'Pending',
+        'Canceled'
+    )
+ORDER BY
+    order_id;
+    
+--The example shows how to find orders whose statuses are not Shipped and Canceled:
+
+SELECT
+    order_id,
+    customer_id,
+    status,
+    salesman_id
+FROM
+    orders
+WHERE
+    status NOT IN(
+        'Shipped',
+        'Canceled'
+    )
+ORDER BY
+    order_id;
+    
+-- returns the id, first name, and last name of salesmen who are in charge of orders that were canceled
+
+SELECT
+    employee_id,
+    first_name,
+    last_name
+FROM
+    employees
+WHERE
+    employee_id IN(
+        SELECT
+            DISTINCT salesman_id
+        FROM
+            orders
+        WHERE
+            status = 'Canceled'
+    )
+ORDER BY
+    first_Name;
+    
+--the sub executes first and returns a list of salesman ids:
+
+SELECT
+	DISTINCT salesman_id
+FROM
+	orders
+WHERE
+	status = 'Canceled';
+
+--The example uses the NOT IN to find customers who have not placed any orders:
+
+SELECT
+    customer_id,
+    name
+FROM
+    customer
+WHERE
+    customer_id NOT IN(
+        SELECT
+            customer_id
+        FROM
+            orders );  
+
+--The following example shows how to get the sales orders of salesman 60, 61, and 62:
+
+SELECT
+    customer_id,
+    status,
+    salesman_id
+FROM
+    orders
+WHERE
+    salesman_id IN(
+        60,
+        61,
+        62
+    )
+ORDER BY
+    customer_id;
+    
+--The following statement returns products whose standard costs are between 500 and 600:
+
+SELECT
+    product_name,
+    standard_cost
+FROM
+    products
+WHERE
+    standard_cost BETWEEN 500 AND 600
+ORDER BY
+    standard_cost;
+
+--To query products whose standard costs are not between 500 and 600, you add the NOT operator to the above query as follows:
+
+SELECT
+    product_name,
+    standard_cost
+FROM
+    products
+WHERE
+    standard_cost NOT BETWEEN 500 AND 600
+ORDER BY
+    product_name;
+    
+--The following statement returns the orders placed by customers between December 1, 2016, and December 31, 2016:
+
+SELECT
+    order_id,
+    customer_id,
+    status,
+    order_date
+FROM
+    orders
+WHERE
+    order_date BETWEEN DATE '2016-12-01' AND DATE '2016-12-31'
+ORDER BY
+    order_date;
+
+
 SELECT
     name,
     address,
