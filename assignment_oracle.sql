@@ -30,7 +30,7 @@ CREATE TABLE locations
       REFERENCES countries( country_id ) 
       ON DELETE CASCADE
   );
--- warehouses
+-- warehouses 
 CREATE TABLE warehouses
   (
     warehouse_id NUMBER 
