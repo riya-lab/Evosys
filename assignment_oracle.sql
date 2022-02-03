@@ -3305,3 +3305,18 @@ FROM
    orders
 ORDER BY 
    order_date DESC;
+   
+SELECT DISTINCT
+  first_name
+FROM
+  contacts
+ORDER BY
+  first_name;
+  
+SELECT
+    DISTINCT product_id,
+    quantity
+FROM
+    ORDER_ITEMS
+ORDER BY
+    product_id;
