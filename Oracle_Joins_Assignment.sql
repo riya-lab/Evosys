@@ -95,7 +95,7 @@ FROM
     palette_a a
 FULL OUTER JOIN palette_b b ON a.color = b.color;
 
---you perform the same full join and then exclude the rows that you don’t want from both sides using a WHERE clause as follows
+--you perform the same full join and then exclude the rows that you donâ€™t want from both sides using a WHERE clause as follows
 SELECT
     a.id id_a,
     a.color color_a,
@@ -124,3 +124,4 @@ FROM
 INNER JOIN order_items USING( order_id )
 ORDER BY
   order_date DESC;
+  
